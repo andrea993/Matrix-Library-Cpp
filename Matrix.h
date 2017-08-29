@@ -13,6 +13,7 @@
 #include <istream>
 #include <ostream>
 #include <string>
+#include <initializer_list>
 
 using namespace std;
 
@@ -74,6 +75,33 @@ public:
 		M=c;
 	}
 
+	Matrix<T>(initializer_list<initializer_list<T>> list)
+	{
+		 N=list.size();
+		 mat.resize(N);
+
+		 M=0;
+		 if (N>0)
+			 M=list.begin()->size();
+
+		 unsigned i=0;
+		 for (const auto& r : list)
+		 {
+			 mat[i].resize(M);
+			 unsigned j=0;
+			 for (const auto& val : r)
+			 {
+				 mat[i][j]=val;;
+				 j++;
+			 }
+			 if (M!=j)
+				 logic_error("Not a matrix");
+
+			 i++;
+
+		 }
+	}
+
 	Matrix<T>& operator=(const vector<vector<T>> &m);
 	vector<T>& operator[](unsigned i) { return mat[i]; }
 	vector<T> operator[](unsigned i) const { return mat[i]; }
@@ -122,6 +150,8 @@ public:
 
 
 	static T Det(const Matrix<T>& x);
+	static Matrix<T> LinSolve(const Matrix &A, const Matrix &b) { return A.Inv()*b; }
+
 
 };
 

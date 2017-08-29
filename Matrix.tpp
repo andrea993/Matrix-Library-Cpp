@@ -40,6 +40,8 @@ Matrix<TE> operator*(const TE& a, const Matrix<TE>& b)
 	for (unsigned i=0; i< b.N; i++)
 		for (unsigned j=0; j<b.M; j++)
 			y[i][j]=a*b[i][j];
+	
+	return y;
 }
 
 template <typename TE>
