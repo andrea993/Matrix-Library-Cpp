@@ -15,8 +15,6 @@
 #include <string>
 #include <initializer_list>
 
-using namespace std;
-
 template <class T>
 class Matrix
 {
@@ -27,11 +25,11 @@ private:
 	template <typename TE> friend Matrix<TE> operator+(const Matrix<TE>& a, const Matrix<TE>& b);
 	template <typename TE> friend Matrix<TE> operator-(const Matrix<TE>& a, const Matrix<TE>& b);
 	template <typename TE> friend bool operator==(const Matrix<TE>& a, const Matrix<TE>& b);
-	template <typename TE> friend ostream& operator<<(ostream &os, const Matrix<TE>& x);
-	template <typename TE> friend istream& operator>>(istream &is, Matrix<TE>& x);
+	template <typename TE> friend std::ostream& operator<<(std::ostream &os, const Matrix<TE>& x);
+	template <typename TE> friend std::istream& operator>>(std::istream &is, Matrix<TE>& x);
 
 
-	vector<vector<T>> mat;
+	std::vector<std::vector<T>> mat;
 	unsigned N;
 	unsigned M;
 
@@ -60,7 +58,7 @@ public:
 		M=m.M;
 	}
 
-	Matrix<T>(const vector<vector<T>> &m)
+	Matrix<T>(const std::vector<std::vector<T>> &m)
 	{
 		unsigned c=0;
 		if(m.size()>0)
@@ -68,14 +66,14 @@ public:
 			c=m[0].size();
 			for (unsigned i=1; i<m.size();i++)
 				if(m[i].size()!=c)
-					throw logic_error("Not a matrix");
+					throw std::logic_error("Not a matrix");
 		}
 		mat=m;
 		N=m.size();
 		M=c;
 	}
 
-	Matrix<T>(initializer_list<initializer_list<T>> list)
+	Matrix<T>(std::initializer_list<std::initializer_list<T>> list)
 	{
 		 N=list.size();
 		 mat.resize(N);
@@ -95,16 +93,16 @@ public:
 				 j++;
 			 }
 			 if (M!=j)
-				 logic_error("Not a matrix");
+				 std::logic_error("Not a matrix");
 
 			 i++;
 
 		 }
 	}
 
-	Matrix<T>& operator=(const vector<vector<T>> &m);
-	vector<T>& operator[](unsigned i) { return mat[i]; }
-	vector<T> operator[](unsigned i) const { return mat[i]; }
+	Matrix<T>& operator=(const std::vector<std::vector<T>> &m);
+	std::vector<T>& operator[](unsigned i) { return mat[i]; }
+	std::vector<T> operator[](unsigned i) const { return mat[i]; }
 	Matrix<T>& operator+=(const Matrix<T> &m);
 	Matrix<T>& operator-=(const Matrix<T> &m);
 	Matrix<T>& operator*=(const Matrix<T> &m);
@@ -119,7 +117,7 @@ public:
 
 	Matrix<T>& AppendRow(T init=0)
 	{
-		vector<T> r(M,init);
+		std::vector<T> r(M,init);
 		mat.push_back(r);
 		N++;
 		return *this;
