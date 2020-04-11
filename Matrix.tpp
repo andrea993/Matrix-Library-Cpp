@@ -275,7 +275,7 @@ template <class T>
 Matrix<T> Matrix<T>::Inv() const
 {
 	double det_x=Det();
-	if(det_x = 0)
+	if(det_x == 0)
 		throw std::logic_error("Can't invert matrix  (determinant=0)");
 	
 	Matrix<T> y(N,M);
